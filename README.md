@@ -1,3 +1,18 @@
+Food Ordering Chatbot
+======================
+
+A chatbot for a restaurant, built on Dialogflow, that lets customers
+place and track food orders through natural conversation. Dialogflow
+handles the conversational/NLU side (understanding intents like
+adding items, removing items, completing an order, or checking an
+order's status); it forwards each recognized intent to this FastAPI
+backend as a webhook call, which does the actual work - looking up
+menu prices, saving orders and their items to PostgreSQL, and
+reporting order status back - and returns a text reply that
+Dialogflow speaks/displays to the user.
+
+A simple HTML frontend is included as well, for a basic chat UI.
+
 Directory structure
 ===================
 backend: Contains Python FastAPI backend code
