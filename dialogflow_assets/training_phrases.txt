@@ -1,0 +1,216 @@
+
+# Default Welcome Intent
+
+Text response:
+
+Hello, how can I help you? You can say "New Order" or "Track Order".
+
+Good day! What can I do for you today? You can say "New Order" or "Track Order".
+
+Greetings! How can I assist you? You can say "New Order" or "Track Order".
+
+# Default Fallback Intent
+
+Text response:
+
+I didn't understand. You can say "New Order" or "Track Order". When placing a new order, please mention only items from our available menu: Pizza, Burger, Cheeseburger, French Fries, Chicken Sandwich, Chicken Nuggets, Hot Dog, Cola, and Milkshake.
+
+Please also specify a quantity for each item. For example: "One pizza and two cheeseburgers."
+
+# Intent = new.order
+
+Training phrases:
+
+new order
+
+place a new order
+
+I want to make a new order
+
+I would like to order some food
+
+Text responses:
+
+Okay, starting a new order. You can say something like, "I want two pizzas and one milkshake." Make sure to specify a quantity for every food item.
+
+Our available menu includes: Pizza, Burger, Cheeseburger, French Fries, Chicken Sandwich, Chicken Nuggets, Hot Dog, Cola, and Milkshake.
+
+Starting a new order. Please specify the food items and quantities. For example, you can say, "I would like to order two pizzas and one milkshake."
+
+Our available menu includes: Pizza, Burger, Cheeseburger, French Fries, Chicken Sandwich, Chicken Nuggets, Hot Dog, Cola, and Milkshake.
+
+Intent = order.add
+Context: ongoing-order
+======================
+
+Training phrases:
+
+Give me two cheeseburgers and one pizza
+
+I'd like to order two burgers, one cheese pizza, and three milkshakes, please
+
+Can you please get me two chicken sandwiches, one pizza, and one milkshake?
+
+Please prepare two burgers, along with one pizza and one cola
+
+Three burgers, two colas, and one order of French fries
+
+Can I get two chicken sandwiches, along with one pizza and one milkshake?
+
+I'll take two burgers, one pizza, and one milkshake, please
+
+I want one milkshake, two cheeseburgers, and one hot dog
+
+In addition, add one chicken sandwich and two pizzas
+
+Moreover, include two milkshakes
+
+Also, please give me two milkshakes
+
+Additionally, I'd like two milkshakes
+
+Two pizzas, and let's add one burger too
+
+Three burgers
+
+Oh yes, add one order of French fries as well
+
+Add two chicken sandwiches
+
+Can I also get one hot dog?
+
+Please add three colas to my order
+
+Add one cheeseburger and two orders of fries
+
+I also want six chicken nuggets
+
+Give me two chicken nugget meals and one milkshake
+
+Intent = order.complete
+Context: ongoing-order
+======================
+
+Training phrases:
+
+Nope
+
+That's all I needed
+
+I'm done ordering
+
+Place the order
+
+Done
+
+That's it
+
+That will be all
+
+Complete my order
+
+Confirm the order
+
+Nothing else
+
+I'm finished
+
+You can place the order now
+
+Intent = order.remove
+Context: ongoing-order
+======================
+
+Training phrases:
+
+No burger or fries in my order, please remove them
+
+Kindly take the burger and fries off the order
+
+I'd like to exclude the burger and fries, please
+
+I no longer want the chicken sandwich in my order, please remove it
+
+Kindly exclude the chicken sandwich from my order
+
+I would like to remove the pizza from my order
+
+Please take the pizza off my order
+
+Delete the burger from my order
+
+Please get rid of the hot dog and French fries
+
+I don't want the cheeseburger
+
+Remove the pizza from my order
+
+Can you remove the milkshake?
+
+Remove the chicken nuggets
+
+Please delete the cola from my order
+
+I changed my mind about the hot dog
+
+Take one burger off my order
+
+Cancel the French fries
+
+I don't want the chicken sandwich anymore
+----------------------------------------------------------------
+# Intent = track.order
+
+Training phrases:
+
+Check the status of my order
+
+Track my order
+
+Track an existing order
+
+Where is my order?
+
+I want to check my order status
+
+Can you track my order?
+
+Text responses:
+
+Definitely. What is your order ID?
+
+Sure. Please enter your order ID.
+
+Of course. What is your order ID?
+
+Intent = track.order
+Context: ongoing-tracking
+=========================
+
+Training phrases:
+
+How about 32?
+
+How about 40?
+
+Here it is: 63321
+
+Here you go: 123
+
+Here is my order number: 675
+
+The ID is 453
+
+Here is my order ID: 341
+
+7890
+
+123
+
+345
+
+My order ID is 5678
+
+The order number is 9012
+
+It's 7643
