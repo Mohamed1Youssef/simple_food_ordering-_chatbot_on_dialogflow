@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CHOMP — Fast Food, Made Fresh</title>
+
+<!-- Fonts: chunky display (Fredoka) + clean body (DM Sans) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --red:      #E23A2E;   /* tomato punch */
+    --red-deep: #B92C22;
+    --mustard:  #FFC93C;   /* warm accent */
+    --green:    #2FBF71;   /* freshness pop */
+    --ink:      #1A1614;   /* near-black text */
+    --cream:    #FFF6EC;   /* warm background */
+    --paper:    #FFFDF9;   /* card surface */
+    --line:     #E9DFD0;   /* soft divider */
+    --shadow:   0 14px 30px -14px rgba(26,22,20,.35);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:"DM Sans", system-ui, sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{ font-family:"Fredoka", sans-serif; letter-spacing:-.01em; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ width:min(1100px, 92vw); margin-inline:auto; }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,246,236,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+  .logo{ display:flex; align-items:center; gap:.5rem; font-family:"Fredoka"; font-weight:700; font-size:1.5rem; }
+  .logo .mark{
+    display:grid; place-items:center; width:38px; height:38px; border-radius:12px;
+    background:var(--red); color:#fff; font-size:1.1rem; transform:rotate(-6deg);
+  }
+  .nav-links{ display:flex; gap:1.6rem; font-weight:500; }
+  .nav-links a{ color:#6b5f52; transition:color .15s; }
+  .nav-links a:hover{ color:var(--ink); }
+  .btn{
+    font-family:"Fredoka"; font-weight:600; font-size:1rem;
+    background:var(--ink); color:#fff; border:none; cursor:pointer;
+    padding:.7rem 1.3rem; border-radius:999px; transition:transform .12s, background .15s;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn.red{ background:var(--red); }
+  .btn.red:hover{ background:var(--red-deep); }
+  @media(max-width:720px){ .nav-links{ display:none; } }
+
+  /* ---------- Hero ---------- */
+  .hero{ position:relative; padding:72px 0 60px; overflow:hidden; }
+  .hero-grid{ display:grid; grid-template-columns:1.1fr .9fr; gap:2rem; align-items:center; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:.5rem;
+    font-weight:700; font-size:.8rem; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--red); background:#fff; border:1px solid var(--line);
+    padding:.4rem .8rem; border-radius:999px;
+  }
+  .hero h1{ font-size:clamp(2.8rem, 6vw, 4.6rem); line-height:.98; margin:1.1rem 0 1rem; }
+  .hero h1 .out{ color:transparent; -webkit-text-stroke:2px var(--ink); }
+  .hero p{ font-size:1.12rem; color:#5d5348; max-width:44ch; }
+  .hero-cta{ display:flex; gap:.8rem; margin-top:1.6rem; flex-wrap:wrap; }
+  .ghost{ background:transparent; color:var(--ink); border:2px solid var(--ink); }
+  .ghost:hover{ background:var(--ink); color:#fff; }
+
+  /* floating food plate */
+  .plate{ position:relative; aspect-ratio:1; display:grid; place-items:center; }
+  .plate .disc{
+    width:78%; aspect-ratio:1; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff, var(--mustard));
+    box-shadow:var(--shadow), inset 0 0 0 12px rgba(255,255,255,.55);
+  }
+  .plate .hero-emoji{ position:absolute; font-size:clamp(5rem, 14vw, 9rem); filter:drop-shadow(0 12px 14px rgba(0,0,0,.18)); }
+  .float{ position:absolute; font-size:2.4rem; animation:bob 4s ease-in-out infinite; }
+  .float.a{ top:6%;  left:2%;  animation-delay:0s; }
+  .float.b{ top:12%; right:4%; animation-delay:.8s; }
+  .float.c{ bottom:8%; left:8%; animation-delay:1.4s; }
+  .float.d{ bottom:4%; right:10%; animation-delay:2s; }
+  @keyframes bob{ 0%,100%{ transform:translateY(0) rotate(-4deg); } 50%{ transform:translateY(-14px) rotate(4deg); } }
+  @media(max-width:820px){ .hero-grid{ grid-template-columns:1fr; } .plate{ max-width:420px; margin-inline:auto; } }
+
+  /* ---------- Menu ---------- */
+  section.menu{ padding:24px 0 80px; }
+  .section-head{ text-align:center; margin-bottom:2.4rem; }
+  .section-head h2{ font-size:clamp(2rem,4vw,2.8rem); }
+  .section-head p{ color:#7a6d5e; }
+  .cat{ font-family:"Fredoka"; font-weight:600; font-size:1.35rem; margin:2rem 0 1rem;
+        display:flex; align-items:center; gap:.7rem; }
+  .cat::after{ content:""; flex:1; height:2px; background:repeating-linear-gradient(90deg,var(--line) 0 8px,transparent 8px 14px); }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:1.1rem; }
+  .card{
+    background:var(--paper); border:1px solid var(--line); border-radius:18px;
+    padding:1.3rem; display:flex; flex-direction:column; gap:.35rem;
+    transition:transform .16s, box-shadow .16s, border-color .16s;
+  }
+  .card:hover{ transform:translateY(-5px); box-shadow:var(--shadow); border-color:var(--mustard); }
+  .card .emoji{ font-size:2.8rem; line-height:1; }
+  .card h4{ font-family:"Fredoka"; font-weight:600; font-size:1.15rem; }
+  .card .desc{ font-size:.88rem; color:#8a7d6e; flex:1; }
+  .price-row{ display:flex; align-items:center; justify-content:space-between; margin-top:.5rem; }
+  /* receipt-tag price — nods to the order-tracking theme */
+  .tag{
+    font-family:"Fredoka"; font-weight:700; color:var(--red);
+    background:#fff; border:1px dashed var(--red); border-radius:8px;
+    padding:.2rem .55rem; font-size:.95rem;
+  }
+  .add{ font-family:"Fredoka"; font-weight:600; font-size:.85rem; cursor:pointer;
+        background:var(--ink); color:#fff; border:none; border-radius:999px; padding:.4rem .9rem; transition:background .15s; }
+  .add:hover{ background:var(--red); }
+
+  /* ---------- How to order (ties to the chatbot) ---------- */
+  .order-strip{ background:var(--ink); color:#fff; padding:56px 0; }
+  .order-strip .wrap{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; text-align:center; }
+  .step .n{ font-family:"Fredoka"; font-weight:700; font-size:1rem; color:var(--ink);
+            background:var(--mustard); width:40px; height:40px; border-radius:50%; display:grid; place-items:center; margin:0 auto .8rem; }
+  .step h3{ font-size:1.2rem; margin-bottom:.3rem; }
+  .step p{ color:#c9bfb4; font-size:.95rem; }
+  .order-strip .cta-center{ text-align:center; margin-top:2.2rem; }
+  @media(max-width:720px){ .order-strip .wrap{ grid-template-columns:1fr; } }
+
+  /* ---------- Footer ---------- */
+  footer{ padding:40px 0; text-align:center; color:#8a7d6e; font-size:.9rem; }
+  footer .logo{ justify-content:center; margin-bottom:.6rem; color:var(--ink); }
+
+  /* accessibility */
+  a:focus-visible, button:focus-visible{ outline:3px solid var(--green); outline-offset:2px; border-radius:6px; }
+  @media(prefers-reduced-motion:reduce){ *{ animation:none !important; scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<!-- ===== Nav ===== -->
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#top"><span class="mark">🍔</span> CHOMP</a>
+      <div class="nav-links">
+        <a href="#menu">Menu</a>
+        <a href="#how">How to order</a>
+        <a href="#" onclick="openChat();return false;">Track order</a>
+      </div>
+      <button class="btn red" onclick="openChat()">Order via chat</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">🔥 Open now · Delivery in 30 min</span>
+      <h1>Fast food,<br><span class="out">made</span> fresh.</h1>
+      <p>Burgers, pizza, wings and shakes — order the whole meal in a chat. Our bot takes it down, adds it up, and keeps you posted till it's at your door.</p>
+      <div class="hero-cta">
+        <button class="btn red" onclick="openChat()">Start an order</button>
+        <a href="#menu" class="btn ghost">See the menu</a>
+      </div>
+    </div>
+    <div class="plate">
+      <span class="float a">🍟</span>
+      <span class="float b">🌭</span>
+      <span class="float c">🥤</span>
+      <span class="float d">🍕</span>
+      <div class="disc"></div>
+      <span class="hero-emoji">🍔</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Menu ===== -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The Menu</h2>
+      <p>Tap <strong>Add</strong> to see how to ask the bot for it.</p>
+    </div>
+
+    <h3 class="cat">🍔 Mains</h3>
+    <div class="grid">
+      <article class="card">
+        <span class="emoji">🍕</span><h4>Pizza</h4>
+        <p class="desc">Wood-fired, loaded with cheese and a crispy edge.</p>
+        <div class="price-row"><span class="tag">$9.99</span><button class="add" onclick="orderItem('Pizza')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🍔</span><h4>Burger</h4>
+        <p class="desc">Classic beef patty, lettuce, tomato, house sauce.</p>
+        <div class="price-row"><span class="tag">$5.99</span><button class="add" onclick="orderItem('Burger')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🧀</span><h4>Cheeseburger</h4>
+        <p class="desc">The Burger, plus a melty slice of aged cheddar.</p>
+        <div class="price-row"><span class="tag">$6.49</span><button class="add" onclick="orderItem('Cheeseburger')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🐔</span><h4>Chicken Burger</h4>
+        <p class="desc">Crispy chicken fillet, pickles, and creamy mayo.</p>
+        <div class="price-row"><span class="tag">$6.99</span><button class="add" onclick="orderItem('Chicken Burger')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🥪</span><h4>Chicken Sandwich</h4>
+        <p class="desc">Grilled chicken, fresh greens, toasted bun.</p>
+        <div class="price-row"><span class="tag">$6.49</span><button class="add" onclick="orderItem('Chicken Sandwich')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🌭</span><h4>Hot Dog</h4>
+        <p class="desc">Juicy frank, soft bun, mustard and ketchup.</p>
+        <div class="price-row"><span class="tag">$4.49</span><button class="add" onclick="orderItem('Hot Dog')">Add</button></div>
+      </article>
+    </div>
+
+    <h3 class="cat">🍟 Sides</h3>
+    <div class="grid">
+      <article class="card">
+        <span class="emoji">🍟</span><h4>French Fries</h4>
+        <p class="desc">Golden, salted, endlessly dippable.</p>
+        <div class="price-row"><span class="tag">$2.99</span><button class="add" onclick="orderItem('French Fries')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🍗</span><h4>Chicken Nuggets</h4>
+        <p class="desc">Six crispy bites with a sauce of your choice.</p>
+        <div class="price-row"><span class="tag">$4.99</span><button class="add" onclick="orderItem('Chicken Nuggets')">Add</button></div>
+      </article>
+    </div>
+
+    <h3 class="cat">🥤 Drinks</h3>
+    <div class="grid">
+      <article class="card">
+        <span class="emoji">🥤</span><h4>Cola</h4>
+        <p class="desc">Ice-cold and fizzy. The classic pairing.</p>
+        <div class="price-row"><span class="tag">$1.99</span><button class="add" onclick="orderItem('Cola')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🧃</span><h4>Orange Juice</h4>
+        <p class="desc">Freshly squeezed, no added sugar.</p>
+        <div class="price-row"><span class="tag">$2.49</span><button class="add" onclick="orderItem('Orange Juice')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">💧</span><h4>Water</h4>
+        <p class="desc">Still, chilled bottle. Stay hydrated.</p>
+        <div class="price-row"><span class="tag">$0.99</span><button class="add" onclick="orderItem('Water')">Add</button></div>
+      </article>
+      <article class="card">
+        <span class="emoji">🍦</span><h4>Milkshake</h4>
+        <p class="desc">Thick, creamy, in vanilla, chocolate or strawberry.</p>
+        <div class="price-row"><span class="tag">$3.99</span><button class="add" onclick="orderItem('Milkshake')">Add</button></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== How to order ===== -->
+<section class="order-strip" id="how">
+  <div class="wrap">
+    <div class="step">
+      <div class="n">1</div>
+      <h3>Say hi to the bot</h3>
+      <p>Open the chat and tell it what you'd like — "I want two burgers and a cola."</p>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <h3>Build your order</h3>
+      <p>Add or remove items anytime. The bot keeps a running total for you.</p>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <h3>Track it live</h3>
+      <p>Get an order ID, then ask "track my order" whenever you want an update.</p>
+    </div>
+  </div>
+  <div class="wrap cta-center">
+    <button class="btn red" onclick="openChat()">Order via chat</button>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo"><span class="mark">🍔</span> CHOMP</div>
+    <p>Built with Dialogflow · An NLP practice project</p>
+  </div>
+</footer>
+
+<!-- ================= Dialogflow Messenger ================= -->
+<!--
+  1) Get your Agent ID from the Dialogflow Console (v2 agents give you an
+     integration snippet under Integrations → Dialogflow Messenger).
+  2) Paste your agent-id below, replacing YOUR_AGENT_ID.
+  If you use the classic (ES) messenger, the snippet uses agent-id likewise.
+-->
+<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.min.css">
+<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.min.js"></script>
+<df-messenger
+  intent="WELCOME"
+  chat-title="CHOMP Bot"
+  agent-id="YOUR_AGENT_ID"
+  language-code="en">
+</df-messenger>
+
+<script>
+  // Open the Dialogflow chat window programmatically
+  function openChat(){
+    var df = document.querySelector('df-messenger');
+    if(df && typeof df.openChat === 'function'){ df.openChat(); }
+    else if(df){ df.setAttribute('expand',''); }
+    else { alert('Add your Dialogflow agent-id in home.html to enable the chat.'); }
+  }
+  // "Add" buttons just prompt the user toward the chat (the bot handles the real order)
+  function orderItem(name){
+    openChat();
+    console.log('Ask the bot: "I want a ' + name + '"');
+  }
+</script>
+</body>
+</html>
